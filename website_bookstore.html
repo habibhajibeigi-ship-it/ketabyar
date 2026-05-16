@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کتابیار — دستیار هوشمند کتابفروشی</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&display=swap');
+
+:root {
+  --ink: #0d0a05;
+  --paper: #faf6ee;
+  --cream: #f2ead8;
+  --gold: #b8860b;
+  --gold2: #d4a017;
+  --gold3: #f0c040;
+  --accent: #1a3a2a;
+  --muted: #7a6a4a;
+  --border: #e0d4b8;
+  --white: #ffffff;
+  --green: #2d7a4f;
+  --red: #c0392b;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Vazirmatn', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 3rem;
+  background: rgba(250,246,238,.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-size: 1.1rem; font-weight: 900; color: var(--gold); }
+.nav-cta {
+  background: var(--gold); color: var(--white);
+  padding: .5rem 1.3rem; border-radius: 8px;
+  font-size: .85rem; font-weight: 700; text-decoration: none;
+  transition: background .2s;
+}
+.nav-cta:hover { background: var(--gold2); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 8rem 2rem 5rem;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, #d4a01722 0%, transparent 70%),
+              linear-gradient(170deg, #faf6ee 0%, #f0e8d0 100%);
+  text-align: center;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--accent); color: var(--gold3);
+  font-size: .78rem; font-weight: 700;
+  padding: .4rem 1rem; border-radius: 99px;
+  margin-bottom: 1.8rem;
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 900; line-height: 1.15;
+  margin-bottom: 1.2rem;
+}
+.hero h1 em {
+  font-style: normal; color: var(--gold);
+  border-bottom: 3px solid var(--gold3);
+}
+.hero-sub {
+  font-size: 1.05rem; color: var(--muted);
+  line-height: 1.8; max-width: 540px;
+  margin: 0 auto 2.5rem;
+}
+.hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: var(--white); padding: .9rem 2.2rem;
+  border-radius: 12px; font-size: 1rem; font-weight: 700;
+  text-decoration: none; box-shadow: 0 8px 24px #d4a01733;
+  transition: transform .2s;
+}
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-secondary {
+  background: transparent; color: var(--accent);
+  padding: .9rem 2.2rem; border-radius: 12px;
+  font-size: 1rem; font-weight: 600; text-decoration: none;
+  border: 2px solid var(--border); transition: border-color .2s;
+}
+.btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+/* STATS */
+.stats {
+  display: flex; gap: 1.5rem; justify-content: center;
+  flex-wrap: wrap; margin-top: 4rem;
+}
+.stat {
+  text-align: center; padding: 1rem 1.5rem;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,.06);
+}
+.stat-num { font-size: 1.8rem; font-weight: 900; color: var(--gold); }
+.stat-label { font-size: .75rem; color: var(--muted); margin-top: .2rem; }
+
+/* SECTION */
+section { padding: 5rem 2rem; }
+.container { max-width: 1000px; margin: 0 auto; }
+.section-tag {
+  font-size: .75rem; font-weight: 700; letter-spacing: 1.5px;
+  color: var(--gold); margin-bottom: .6rem; display: block;
+}
+.section-title {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 900; margin-bottom: .8rem;
+}
+.section-sub { font-size: .95rem; color: var(--muted); line-height: 1.8; }
+
+/* HOW */
+.how { background: var(--cream); }
+.steps-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem; margin-top: 3rem;
+}
+.step-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 18px; padding: 1.8rem 1.4rem;
+  position: relative; transition: transform .25s;
+}
+.step-card:hover { transform: translateY(-4px); }
+.step-num {
+  position: absolute; top: -12px; right: 16px;
+  width: 26px; height: 26px; background: var(--gold);
+  color: var(--white); font-size: .72rem; font-weight: 900;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+.step-icon { font-size: 1.8rem; margin-bottom: .8rem; }
+.step-card h3 { font-size: .95rem; font-weight: 700; margin-bottom: .4rem; }
+.step-card p { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+
+/* FEATURES */
+.feat-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.2rem; margin-top: 3rem;
+}
+.feat-card {
+  border: 1px solid var(--border); border-radius: 18px;
+  padding: 1.8rem; background: var(--white);
+  transition: border-color .2s, transform .25s;
+}
+.feat-card:hover { border-color: var(--gold2); transform: translateY(-3px); }
+.feat-icon {
+  width: 44px; height: 44px;
+  background: #d4a01722; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; margin-bottom: .8rem;
+}
+.feat-card h3 { font-size: .95rem; font-weight: 700; margin-bottom: .4rem; }
+.feat-card p { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+
+/* PRICING */
+.pricing { background: var(--cream); }
+.price-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.2rem; margin-top: 3rem; align-items: start;
+}
+.price-card {
+  background: var(--white); border: 2px solid var(--border);
+  border-radius: 22px; padding: 2rem; position: relative;
+  transition: transform .25s;
+}
+.price-card:hover { transform: translateY(-4px); }
+.price-card.featured { border-color: var(--gold); }
+.price-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--gold); color: var(--white);
+  font-size: .7rem; font-weight: 700;
+  padding: .2rem .8rem; border-radius: 99px; white-space: nowrap;
+}
+.price-icon { font-size: 2rem; margin-bottom: .6rem; }
+.price-name { font-size: .9rem; font-weight: 700; color: var(--muted); margin-bottom: .4rem; }
+.price-amount { font-size: 2rem; font-weight: 900; color: var(--gold); line-height: 1; }
+.price-period { font-size: .75rem; color: var(--muted); margin-bottom: 1.2rem; }
+.price-features { list-style: none; margin-bottom: 1.5rem; }
+.price-features li {
+  font-size: .82rem; padding: .35rem 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: .4rem;
+}
+.price-features li:last-child { border-bottom: none; }
+.price-features li::before { content: '✓'; color: var(--gold); font-weight: 700; }
+.price-features li.no { color: var(--muted); }
+.price-features li.no::before { content: '–'; color: var(--border); }
+.btn-price {
+  display: block; text-align: center; padding: .7rem;
+  border-radius: 10px; font-size: .88rem; font-weight: 700;
+  text-decoration: none; transition: all .2s; cursor: pointer;
+  border: none; font-family: 'Vazirmatn', sans-serif; width: 100%;
+}
+.btn-price-outline { border: 2px solid var(--border); color: var(--muted); background: none; }
+.btn-price-outline:hover { border-color: var(--gold); color: var(--gold); }
+.btn-price-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: var(--white); box-shadow: 0 4px 16px #d4a01733;
+}
+.btn-price-gold:hover { transform: translateY(-1px); }
+
+/* ── FORM SECTION ── */
+.form-section { background: var(--accent); }
+.form-section .section-title { color: var(--white); }
+.form-section .section-sub { color: #a0c0a8; }
+
+.form-wrap {
+  background: var(--white); border-radius: 24px;
+  padding: 2.5rem; margin-top: 3rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,.2);
+}
+
+/* Steps indicator */
+.form-steps {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; margin-bottom: 2rem;
+}
+.fdot {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 2px solid var(--border); background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .78rem; font-weight: 700; color: var(--muted);
+  transition: all .3s; z-index: 1;
+}
+.fdot.active { border-color: var(--gold2); background: var(--gold2); color: #fff; }
+.fdot.done { border-color: var(--green); background: var(--green); color: #fff; }
+.fline { flex: 1; height: 2px; background: var(--border); max-width: 50px; transition: background .3s; }
+.fline.done { background: var(--green); }
+
+.fpage { display: none; }
+.fpage.active { display: block; }
+
+.ftitle {
+  font-size: 1rem; font-weight: 700; color: var(--gold);
+  margin-bottom: 1.2rem; padding-bottom: .7rem;
+  border-bottom: 1px solid var(--border);
+}
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.frow.full { grid-template-columns: 1fr; }
+.field { display: flex; flex-direction: column; gap: .35rem; }
+.field label { font-size: .8rem; font-weight: 600; color: var(--muted); }
+.field label .req { color: var(--red); }
+.field input, .field select {
+  border: 1.5px solid var(--border); border-radius: 10px;
+  padding: .65rem 1rem; font-family: 'Vazirmatn', sans-serif;
+  font-size: .88rem; color: var(--ink); background: #faf8f4;
+  outline: none; transition: border .2s;
+}
+.field input:focus, .field select:focus {
+  border-color: var(--gold2); background: #fff;
+  box-shadow: 0 0 0 3px #c9a84c18;
+}
+
+.radio-group { display: flex; flex-wrap: wrap; gap: .5rem; }
+.radio-group label {
+  display: flex; align-items: center; gap: .3rem;
+  padding: .45rem .85rem; border: 1.5px solid var(--border);
+  border-radius: 8px; cursor: pointer; font-size: .82rem;
+  color: var(--muted); transition: all .2s; background: #faf8f4;
+}
+.radio-group input { display: none; }
+.radio-group label:has(input:checked) {
+  border-color: var(--gold2); background: #c9a84c11; color: var(--gold); font-weight: 600;
+}
+
+.check-group { display: flex; flex-wrap: wrap; gap: .5rem; }
+.check-group label {
+  display: flex; align-items: center; gap: .3rem;
+  padding: .45rem .85rem; border: 1.5px solid var(--border);
+  border-radius: 8px; cursor: pointer; font-size: .82rem;
+  color: var(--muted); transition: all .2s; background: #faf8f4;
+}
+.check-group input { display: none; }
+.check-group label:has(input:checked) {
+  border-color: var(--gold2); background: #c9a84c11; color: var(--gold); font-weight: 600;
+}
+
+.btn-row { display: flex; gap: .8rem; margin-top: 1.5rem; }
+.btn-next {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: var(--white); padding: .72rem 1.8rem;
+  border-radius: 10px; font-size: .9rem; font-weight: 700;
+  cursor: pointer; border: none; font-family: 'Vazirmatn', sans-serif;
+  transition: transform .2s; box-shadow: 0 4px 12px #c9a84c33;
+}
+.btn-next:hover { transform: translateY(-1px); }
+.btn-back {
+  background: none; border: 1.5px solid var(--border);
+  color: var(--muted); padding: .72rem 1.5rem;
+  border-radius: 10px; font-size: .9rem; font-weight: 600;
+  cursor: pointer; font-family: 'Vazirmatn', sans-serif;
+  transition: border-color .2s;
+}
+.btn-back:hover { border-color: var(--gold); color: var(--gold); }
+
+/* Loading */
+.loading {
+  display: none; text-align: center; padding: 3rem 1rem;
+}
+.spinner {
+  width: 48px; height: 48px;
+  border: 4px solid var(--border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Success */
+.success-box {
+  display: none; text-align: center; padding: 2.5rem 1rem;
+}
+.success-box .s-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+.success-box h3 { font-size: 1.4rem; color: var(--green); margin-bottom: .5rem; }
+.success-box p { color: var(--muted); font-size: .9rem; line-height: 1.7; }
+
+/* Error */
+.error-msg {
+  display: none; background: #c0392b11; border: 1px solid #c0392b33;
+  color: var(--red); border-radius: 8px; padding: .7rem 1rem;
+  font-size: .85rem; margin-top: 1rem; text-align: center;
+}
+
+/* FOOTER */
+footer {
+  background: var(--ink); color: #a0906a;
+  text-align: center; padding: 2rem; font-size: .82rem;
+}
+footer span { color: var(--gold2); }
+
+/* Reveal */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 600px) {
+  nav { padding: 1rem 1.5rem; }
+  .frow { grid-template-columns: 1fr; }
+  .form-wrap { padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">📚 کتابیار</div>
+  <a href="#register" class="nav-cta">ثبت‌نام رایگان</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-tag">🤖 دستیار هوشمند • تلگرام و بله</div>
+    <h1>ربات هوشمند برای<br><em>کتابفروشی شما</em></h1>
+    <p class="hero-sub">مشتریانتان شبانه‌روز جستجو کنند، سفارش بدهند و موجودی بگیرند — بدون اینکه شما پشت تلفن باشید.</p>
+    <div class="hero-btns">
+      <a href="#register" class="btn-primary">همین الان ثبت‌نام کن ←</a>
+      <a href="#how" class="btn-secondary">چطور کار می‌کنه؟</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">۲۴/۷</div><div class="stat-label">پاسخ‌دهی خودکار</div></div>
+      <div class="stat"><div class="stat-num">۳ روز</div><div class="stat-label">زمان راه‌اندازی</div></div>
+      <div class="stat"><div class="stat-num">۲</div><div class="stat-label">پلتفرم (تلگرام + بله)</div></div>
+      <div class="stat"><div class="stat-num">∞</div><div class="stat-label">تعداد کتاب</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">نحوه ثبت‌نام و راه‌اندازی</span>
+      <h2 class="section-title">در ۴ قدم ساده شروع کنید</h2>
+      <p class="section-sub">بدون دانش فنی — ما همه چیز را راه‌اندازی می‌کنیم.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">۱</div>
+        <div class="step-icon">📝</div>
+        <h3>فرم ثبت‌نام را پر کن</h3>
+        <p>اطلاعات کتابفروشی و پکیج مورد نظرت را در همین صفحه وارد کن.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">۲</div>
+        <div class="step-icon">📋</div>
+        <h3>لیست کتاب‌ها را بفرست</h3>
+        <p>فایل اکسل یا دستی — ما اطلاعات را در سیستم وارد می‌کنیم.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">۳</div>
+        <div class="step-icon">🤖</div>
+        <h3>ربات راه‌اندازی می‌شه</h3>
+        <p>ظرف ۳ روز کاری ربات اختصاصی شما آماده می‌شود.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">۴</div>
+        <div class="step-icon">🚀</div>
+        <h3>شروع به کار</h3>
+        <p>لینک ربات را به مشتریانتان بدهید — از همین لحظه فعاله!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-tag">امکانات</span>
+      <h2 class="section-title">همه چیز در یک ربات</h2>
+      <p class="section-sub">مشتری سوال می‌کند، ربات جواب می‌دهد — حتی نیمه شب.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card reveal">
+        <div class="feat-icon">🔍</div>
+        <h3>جستجوی هوشمند</h3>
+        <p>حتی با غلط تایپی کتاب را پیدا می‌کند. جستجوی انعطاف‌پذیر با تشخیص اشتباهات.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">📦</div>
+        <h3>ثبت سفارش آنلاین</h3>
+        <p>مشتری نام، تلفن و آدرس را وارد می‌کند — سفارش مستقیم به شما اطلاع داده می‌شود.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">📱</div>
+        <h3>تلگرام + بله</h3>
+        <p>هر دو پیام‌رسان پشتیبانی می‌شود. مشتریان در هر پلتفرمی که هستند دسترسی دارند.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">⚡</div>
+        <h3>پاسخ آنی ۲۴ ساعته</h3>
+        <p>بدون انتظار. مشتری سوال می‌کند، فوراً جواب می‌گیرد — حتی تعطیلات.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">📊</div>
+        <h3>مدیریت با Google Sheet</h3>
+        <p>هیچ نرم‌افزار خاصی لازم نیست. فقط یک صفحه گوگل که هر زمان به‌روز کنید.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">🔔</div>
+        <h3>اطلاع‌رسانی فوری</h3>
+        <p>هر سفارش جدید فوراً به تلگرام شما اطلاع داده می‌شود.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <span class="section-tag">قیمت‌ها</span>
+      <h2 class="section-title">پکیج مناسب خود را انتخاب کنید</h2>
+      <p class="section-sub" style="margin:0 auto">بدون قرارداد بلندمدت — ماه به ماه تمدید کنید.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card reveal">
+        <div class="price-icon">🥉</div>
+        <div class="price-name">برنزی</div>
+        <div class="price-amount">۳۰۰</div>
+        <div class="price-period">هزار تومان / ماه</div>
+        <ul class="price-features">
+          <li>ربات تلگرام</li>
+          <li>جستجوی کتاب</li>
+          <li>نمایش موجودی</li>
+          <li class="no">بله</li>
+          <li class="no">ثبت سفارش</li>
+        </ul>
+        <button class="btn-price btn-price-outline" onclick="selectPlan('🥉 برنزی — ۳۰۰ هزار تومان')">انتخاب این پکیج</button>
+      </div>
+      <div class="price-card featured reveal">
+        <div class="price-badge">⭐ محبوب‌ترین</div>
+        <div class="price-icon">🥈</div>
+        <div class="price-name">نقره‌ای</div>
+        <div class="price-amount">۵۰۰</div>
+        <div class="price-period">هزار تومان / ماه</div>
+        <ul class="price-features">
+          <li>ربات تلگرام</li>
+          <li>ربات بله</li>
+          <li>جستجوی هوشمند</li>
+          <li>ثبت سفارش</li>
+          <li>اطلاع‌رسانی فوری</li>
+        </ul>
+        <button class="btn-price btn-price-gold" onclick="selectPlan('🥈 نقره‌ای — ۵۰۰ هزار تومان')">انتخاب این پکیج</button>
+      </div>
+      <div class="price-card reveal">
+        <div class="price-icon">🥇</div>
+        <div class="price-name">طلایی</div>
+        <div class="price-amount">۸۰۰</div>
+        <div class="price-period">هزار تومان / ماه</div>
+        <ul class="price-features">
+          <li>همه امکانات نقره‌ای</li>
+          <li>پشتیبانی اختصاصی</li>
+          <li>آموزش کامل</li>
+          <li>بروزرسانی رایگان</li>
+          <li>اولویت در پشتیبانی</li>
+        </ul>
+        <button class="btn-price btn-price-outline" onclick="selectPlan('🥇 طلایی — ۸۰۰ هزار تومان')">انتخاب این پکیج</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="register">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <span class="section-tag" style="color:#f0c040">ثبت‌نام</span>
+      <h2 class="section-title">همین الان شروع کنید</h2>
+      <p class="section-sub" style="margin:0 auto">فرم را پر کنید — ظرف ۲۴ ساعت با شما تماس می‌گیریم.</p>
+    </div>
+
+    <div class="form-wrap">
+      <!-- Steps -->
+      <div class="form-steps">
+        <div class="fdot active" id="fd1">۱</div>
+        <div class="fline" id="fl1"></div>
+        <div class="fdot" id="fd2">۲</div>
+        <div class="fline" id="fl2"></div>
+        <div class="fdot" id="fd3">۳</div>
+      </div>
+
+      <!-- Page 1 -->
+      <div class="fpage active" id="fp1">
+        <div class="ftitle">🏪 اطلاعات کتابفروشی</div>
+        <div class="frow">
+          <div class="field">
+            <label>نام کتابفروشی <span class="req">*</span></label>
+            <input type="text" id="shopName" placeholder="مثلاً: کتابفروشی نور">
+          </div>
+          <div class="field">
+            <label>نام صاحب مغازه <span class="req">*</span></label>
+            <input type="text" id="ownerName" placeholder="نام و نام خانوادگی">
+          </div>
+        </div>
+        <div class="frow">
+          <div class="field">
+            <label>شماره تماس <span class="req">*</span></label>
+            <input type="tel" id="phone" placeholder="09xx-xxx-xxxx">
+          </div>
+          <div class="field">
+            <label>شهر</label>
+            <input type="text" id="city" placeholder="تهران">
+          </div>
+        </div>
+        <div class="frow full">
+          <div class="field">
+            <label>آیدی تلگرام شما</label>
+            <input type="text" id="telegramId" placeholder="@username">
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-next" onclick="goStep(2)">مرحله بعد ←</button>
+        </div>
+      </div>
+
+      <!-- Page 2 -->
+      <div class="fpage" id="fp2">
+        <div class="ftitle">💰 انتخاب پکیج</div>
+        <div class="frow full">
+          <div class="field">
+            <label>پکیج مورد نظر <span class="req">*</span></label>
+            <div class="radio-group" id="planGroup">
+              <label><input type="radio" name="plan" value="🥉 برنزی — ۳۰۰ هزار تومان"> 🥉 برنزی — ۳۰۰ هزار</label>
+              <label><input type="radio" name="plan" value="🥈 نقره‌ای — ۵۰۰ هزار تومان" checked> 🥈 نقره‌ای — ۵۰۰ هزار</label>
+              <label><input type="radio" name="plan" value="🥇 طلایی — ۸۰۰ هزار تومان"> 🥇 طلایی — ۸۰۰ هزار</label>
+            </div>
+          </div>
+        </div>
+        <div class="frow full">
+          <div class="field">
+            <label>پلتفرم مورد نظر</label>
+            <div class="check-group">
+              <label><input type="checkbox" id="chkTelegram" checked> 📱 تلگرام</label>
+              <label><input type="checkbox" id="chkBale"> 💬 بله</label>
+            </div>
+          </div>
+        </div>
+        <div class="frow full">
+          <div class="field">
+            <label>تعداد کتاب‌های موجود (تقریبی)</label>
+            <div class="radio-group">
+              <label><input type="radio" name="bookCount" value="کمتر از ۵۰"> کمتر از ۵۰</label>
+              <label><input type="radio" name="bookCount" value="۵۰ تا ۲۰۰" checked> ۵۰ تا ۲۰۰</label>
+              <label><input type="radio" name="bookCount" value="بیشتر از ۲۰۰"> بیشتر از ۲۰۰</label>
+            </div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-next" onclick="goStep(3)">مرحله بعد ←</button>
+          <button class="btn-back" onclick="goStep(1)">← برگشت</button>
+        </div>
+      </div>
+
+      <!-- Page 3 -->
+      <div class="fpage" id="fp3">
+        <div class="ftitle">✅ تأیید نهایی</div>
+        <div id="summaryBox" style="background:#faf8f4;border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin-bottom:1rem;font-size:.85rem;line-height:2"></div>
+        <div class="btn-row">
+          <button class="btn-next" onclick="submitForm()">✅ ثبت‌نام نهایی</button>
+          <button class="btn-back" onclick="goStep(2)">← برگشت</button>
+        </div>
+        <div class="error-msg" id="errMsg">❌ خطا در ارسال — لطفاً دوباره تلاش کنید.</div>
+      </div>
+
+      <!-- Loading -->
+      <div class="loading" id="loadingBox">
+        <div class="spinner"></div>
+        <p style="color:var(--muted);font-size:.9rem">در حال ثبت اطلاعات...</p>
+      </div>
+
+      <!-- Success -->
+      <div class="success-box" id="successBox">
+        <div class="s-icon">🎉</div>
+        <h3>ثبت‌نام با موفقیت انجام شد!</h3>
+        <p>اطلاعات شما ثبت شد.<br>ظرف <strong>۲۴ ساعت</strong> کارشناس ما با شما تماس می‌گیرد.<br><br>با تشکر از اعتماد شما 📚</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>ساخته شده با ❤️ برای <span>کتابفروشی‌های ایران</span> — کتابیار © ۱۴۰۴</p>
+</footer>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxD8_uv53RVCcoqDbJgLp9Zt9lawdUwonxIU-UU5KK1KLLBlX1wQ8vEduYKw3mn1_k/exec';
+
+// انتخاب پکیج از دکمه pricing
+function selectPlan(plan) {
+  document.querySelectorAll('input[name="plan"]').forEach(r => {
+    r.checked = r.value === plan;
+  });
+  document.getElementById('register').scrollIntoView({ behavior: 'smooth' });
+}
+
+// رفتن به مرحله
+function goStep(n) {
+  if (n === 2) {
+    if (!document.getElementById('shopName').value.trim()) { alert('نام کتابفروشی را وارد کنید'); return; }
+    if (!document.getElementById('ownerName').value.trim()) { alert('نام صاحب مغازه را وارد کنید'); return; }
+    if (!document.getElementById('phone').value.trim()) { alert('شماره تماس را وارد کنید'); return; }
+  }
+  if (n === 3) buildSummary();
+
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('fp' + i).classList.toggle('active', i === n);
+    const dot = document.getElementById('fd' + i);
+    dot.classList.remove('active', 'done');
+    if (i === n) dot.classList.add('active');
+    else if (i < n) { dot.classList.add('done'); dot.textContent = '✓'; }
+    else dot.textContent = i;
+    if (i < 3) document.getElementById('fl' + i).classList.toggle('done', i < n);
+  }
+  document.getElementById('register').scrollIntoView({ behavior: 'smooth' });
+}
+
+function getPlan() {
+  const r = document.querySelector('input[name="plan"]:checked');
+  return r ? r.value : 'نقره‌ای';
+}
+function getPlatforms() {
+  const p = [];
+  if (document.getElementById('chkTelegram').checked) p.push('تلگرام');
+  if (document.getElementById('chkBale').checked) p.push('بله');
+  return p.join(' + ') || 'تلگرام';
+}
+function getBookCount() {
+  const r = document.querySelector('input[name="bookCount"]:checked');
+  return r ? r.value : '';
+}
+
+function buildSummary() {
+  const rows = [
+    ['نام کتابفروشی', document.getElementById('shopName').value],
+    ['صاحب مغازه', document.getElementById('ownerName').value],
+    ['تلفن', document.getElementById('phone').value],
+    ['شهر', document.getElementById('city').value || '—'],
+    ['آیدی تلگرام', document.getElementById('telegramId').value || '—'],
+    ['پکیج', getPlan()],
+    ['پلتفرم', getPlatforms()],
+    ['تعداد کتاب', getBookCount()],
+  ];
+  document.getElementById('summaryBox').innerHTML = rows.map(([l, v]) =>
+    `<div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:.3rem 0">
+      <span style="color:var(--muted)">${l}</span>
+      <span style="font-weight:600">${v}</span>
+    </div>`
+  ).join('');
+}
+
+async function submitForm() {
+  const data = {
+    shopName:    document.getElementById('shopName').value,
+    ownerName:   document.getElementById('ownerName').value,
+    phone:       document.getElementById('phone').value,
+    city:        document.getElementById('city').value,
+    telegramId:  document.getElementById('telegramId').value,
+    botUsername: '',
+    plan:        getPlan() + ' | ' + getPlatforms() + ' | ' + getBookCount(),
+  };
+
+  // نمایش loading
+  document.getElementById('fp3').style.display = 'none';
+  document.getElementById('loadingBox').style.display = 'block';
+  document.getElementById('errMsg').style.display = 'none';
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    document.getElementById('loadingBox').style.display = 'none';
+    document.getElementById('successBox').style.display = 'block';
+
+  } catch (err) {
+    document.getElementById('loadingBox').style.display = 'none';
+    document.getElementById('fp3').style.display = 'block';
+    document.getElementById('errMsg').style.display = 'block';
+  }
+}
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
